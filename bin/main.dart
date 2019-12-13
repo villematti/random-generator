@@ -10,7 +10,7 @@ main(List<String> arguments) {
       envVars['rnd_port'] == null ? 3000 : int.parse(envVars['rnd_port']);
   var certPath = envVars['rnd_cert'] == null ? "" : envVars['rnd_cert'];
   var certKeyPath =
-      envVars['rnd_cert_key'] == null ? 3000 : envVars['rnd_cert_key'];
+      envVars['rnd_cert_key'] == null ? "" : envVars['rnd_cert_key'];
 
   print(envVars);
 
