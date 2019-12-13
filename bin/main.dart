@@ -6,7 +6,8 @@ main(List<String> arguments) {
   var domain = envVars['rnd_domain'] == null
       ? InternetAddress.loopbackIPv4
       : envVars['rnd_domain'];
-  var port = envVars['rnd_port'] == null ? 3000 : envVars['rnd_port'];
+  var port =
+      envVars['rnd_port'] == null ? 3000 : int.parse(envVars['rnd_port']);
   var certPath = envVars['rnd_cert'] == null ? "" : envVars['rnd_cert'];
   var certKeyPath =
       envVars['rnd_cert_key'] == null ? 3000 : envVars['rnd_cert_key'];
@@ -22,7 +23,7 @@ main(List<String> arguments) {
   }
 
   if (!secureServer) {
-    httpServer(domain, int.parse(port));
+    httpServer(domain, port);
   } else {
     httpsServer(domain, certPath, certKeyPath);
   }
