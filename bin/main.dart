@@ -39,8 +39,8 @@ void httpsServer(String domain, String certPath, String certKeyPath) async {
   listenRequest(server);
 }
 
-void httpServer(InternetAddress domain, int port) async {
-  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000);
+void httpServer(dynamic domain, int port) async {
+  var server = await HttpServer.bind(domain, 3000);
   listenRequest(server);
   print('Listening localhos:${server.port}');
 }
