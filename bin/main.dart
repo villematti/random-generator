@@ -12,13 +12,27 @@ main(List<String> arguments) {
 
   if (!secureServer) {
     httpServer();
-  }
+  } else {}
+}
+
+void httpsServer() async {
+  SecurityContext serverContext = new SecurityContext()
+    ..useCertificateChain('path/to/my_cert.pem')
+    ..usePrivateKey('path/to/my_key.pem');
+
+  var server = await HttpServer.bindSecure('example.com', 433, serverContext,
+      backlog: 5);
+
+  listenRequest(server);
 }
 
 void httpServer() async {
-  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000);
+  var server = await HttpServer.bind("rndnum.talviruusu.com", 80);
+  listenRequest(server);
   print('Listening localhos:${server.port}');
+}
 
+void listenRequest(HttpServer server) async {
   await for (HttpRequest request in server) {
     if (request.method == 'POST') {
       handlePost(request);
