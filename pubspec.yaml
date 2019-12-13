@@ -1,0 +1,6 @@
+name:
+    rnd_num
+environment:
+    sdk: '>=2.0.0 <3.0.0'
+dependencies:
+    pointycastle: ^1.0.2
