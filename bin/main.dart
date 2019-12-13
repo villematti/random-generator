@@ -22,8 +22,7 @@ main(List<String> arguments) {
   }
 
   if (!secureServer) {
-    print('Port: $port');
-    httpServer(domain, port);
+    httpServer(domain, int.parse(port));
   } else {
     httpsServer(domain, certPath, certKeyPath);
   }
@@ -43,7 +42,7 @@ void httpsServer(String domain, String certPath, String certKeyPath) async {
 void httpServer(dynamic domain, dynamic port) async {
   var server = await HttpServer.bind(domain, port);
   listenRequest(server);
-  print('Listening localhos:${server.port}');
+  print('Listening ${server.address}:${server.port}');
 }
 
 void listenRequest(HttpServer server) async {
