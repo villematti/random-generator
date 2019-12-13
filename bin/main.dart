@@ -22,7 +22,7 @@ main(List<String> arguments) {
   }
 
   if (!secureServer) {
-    httpServer(domain, port);
+    httpServer(domain, int.parse(port));
   } else {
     httpsServer(domain, certPath, certKeyPath);
   }
