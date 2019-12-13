@@ -17,8 +17,7 @@ main(List<String> arguments) {
   bool secureServer = false;
   for (String arg in arguments) {
     if (arg == "secure" || arg == "-s") {
-      print("No Secure server implemented!");
-      exit(0);
+      secureServer = true;
     }
   }
 
@@ -43,7 +42,7 @@ void httpsServer(String domain, String certPath, String certKeyPath) async {
 void httpServer(dynamic domain, int port) async {
   var server = await HttpServer.bind(domain, port);
   listenRequest(server);
-  print('Listening $domain:${server.port}');
+  print('Listening - $domain:${server.port}');
 }
 
 void listenRequest(HttpServer server) async {
