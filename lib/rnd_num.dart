@@ -1,21 +1,30 @@
 import 'package:pointycastle/pointycastle.dart';
-import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math';
 
-Uint8List randomBytes(int length) {
-  final rnd = new SecureRandom("AES/CTR/AUTO-SEED-PRNG");
+class RandomBytes {
+  final _length;
+  final _rnd = new SecureRandom("AES/CTR/AUTO-SEED-PRNG");
+  final _key = new Uint8List(16);
 
-  final key = new Uint8List(16);
-  final keyParam = new KeyParameter(key);
-  final params = new ParametersWithIV(keyParam, new Uint8List(16));
+  RandomBytes(this._length) {
+    this._rnd.seed(this._getParams());
 
-  rnd.seed(params);
-
-  var random = new Random();
-  for (int i = 0; i < random.nextInt(255); i++) {
-    rnd.nextUint8();
+    var random = new Random();
+    for (int i = 0; i < random.nextInt(255); i++) {
+      this._rnd.nextUint8();
+    }
   }
-  var bytes = rnd.nextBytes(length);
-  return bytes;
+
+  KeyParameter _getKeyParams() {
+    return new KeyParameter(_key);
+  }
+
+  ParametersWithIV<KeyParameter> _getParams() {
+    return new ParametersWithIV(this._getKeyParams(), new Uint8List(16));
+  }
+
+  getBytes() {
+    return this._rnd.nextBytes(this._length);
+  }
 }
