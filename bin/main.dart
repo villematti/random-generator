@@ -39,7 +39,7 @@ void httpsServer(String domain, String certPath, String certKeyPath) async {
   listenRequest(server);
 }
 
-void httpServer(dynamic domain, dynamic port) async {
+void httpServer(dynamic domain, int port) async {
   var server = await HttpServer.bind(domain, port);
   listenRequest(server);
   print('Listening ${server.address}:${server.port}');
