@@ -36,7 +36,7 @@ void httpsServer(String domain, String certPath, String certKeyPath) async {
   var server =
       await HttpServer.bindSecure(domain, 443, serverContext, backlog: 5);
   listenRequest(server);
-  print('Listening - $domain:433');
+  print('Listening - $domain:443');
 }
 
 void httpServer(dynamic domain, int port) async {
