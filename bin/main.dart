@@ -22,6 +22,7 @@ main(List<String> arguments) {
   }
 
   if (!secureServer) {
+    print('Port: $port');
     httpServer(domain, port);
   } else {
     httpsServer(domain, certPath, certKeyPath);
