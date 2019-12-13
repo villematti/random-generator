@@ -2,6 +2,17 @@ import 'package:rnd_num/rnd_num.dart';
 import 'dart:io';
 
 main(List<String> arguments) {
+  Map<String, String> envVars = Platform.environment;
+  var domain = envVars['rnd_domain'] == null
+      ? InternetAddress.loopbackIPv4
+      : envVars['rnd_domain'];
+  var port = envVars['rnd_port'] == null ? 3000 : envVars['rnd_port'];
+  var certPath = envVars['rnd_cert'] == null ? "" : envVars['rnd_cert'];
+  var certKeyPath =
+      envVars['rnd_cert_key'] == null ? 3000 : envVars['rnd_cert_key'];
+
+  print(envVars);
+
   bool secureServer = false;
   for (String arg in arguments) {
     if (arg == "secure" || arg == "-s") {
@@ -11,23 +22,25 @@ main(List<String> arguments) {
   }
 
   if (!secureServer) {
-    httpServer();
-  } else {}
+    httpServer(domain, port);
+  } else {
+    httpsServer(domain, certPath, certKeyPath);
+  }
 }
 
-void httpsServer() async {
+void httpsServer(String domain, String certPath, String certKeyPath) async {
   SecurityContext serverContext = new SecurityContext()
-    ..useCertificateChain('path/to/my_cert.pem')
-    ..usePrivateKey('path/to/my_key.pem');
+    ..useCertificateChain(certPath)
+    ..usePrivateKey(certKeyPath);
 
-  var server = await HttpServer.bindSecure('example.com', 433, serverContext,
-      backlog: 5);
+  var server =
+      await HttpServer.bindSecure(domain, 433, serverContext, backlog: 5);
 
   listenRequest(server);
 }
 
-void httpServer() async {
-  var server = await HttpServer.bind("rndnum.talviruusu.com", 80);
+void httpServer(InternetAddress domain, int port) async {
+  var server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000);
   listenRequest(server);
   print('Listening localhos:${server.port}');
 }
