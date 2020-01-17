@@ -47,6 +47,7 @@ void httpServer(dynamic domain, int port) async {
 
 void listenRequest(HttpServer server) async {
   await for (HttpRequest request in server) {
+    print("Do we get here?");
     if (request.method == 'POST') {
       handlePost(request);
     } else {
