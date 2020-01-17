@@ -47,7 +47,6 @@ void httpServer(dynamic domain, int port) async {
 
 void listenRequest(HttpServer server) async {
   await for (HttpRequest request in server) {
-    print("Do we get here?");
     if (request.method == 'POST') {
       handlePost(request);
     } else {
@@ -59,6 +58,8 @@ void listenRequest(HttpServer server) async {
 }
 
 void handlePost(HttpRequest request) {
+  print("Do we get here?");
+  print(request.uri.queryParameters['length']);
   if (request.uri.queryParameters['length'] != null) {
     var num = int.parse(request.uri.queryParameters['length']);
     var randomBytes = new RandomBytes(num);
